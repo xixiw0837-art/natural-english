@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101114">
+<title>自然英文 · AI 改写助手</title>
+<style>
+:root{color-scheme:dark;--bg:#101114;--panel:#1b1d22;--line:#30333b;--muted:#a6a9b3;--text:#f7f7f8;--accent:#c9f277;--accentText:#18210b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#242832 0,#101114 48%);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);min-height:100vh}
+main{max-width:720px;margin:auto;padding:24px 16px 40px}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:46px;height:46px;border-radius:15px;background:var(--accent);color:var(--accentText);display:grid;place-items:center;font-size:22px;font-weight:800}.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}.brand h1{font-size:21px;margin:3px 0 0}.hero{margin:18px 0 22px}.hero h2{font-size:29px;line-height:1.15;letter-spacing:-.04em;margin:0 0 10px}.hero p{color:var(--muted);line-height:1.55;margin:0}.card{background:rgba(27,29,34,.92);border:1px solid var(--line);border-radius:20px;padding:17px;margin:14px 0}.labelrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;font-weight:650}.hint{font-size:12px;color:var(--muted);font-weight:400}textarea{width:100%;min-height:130px;resize:vertical;background:#111216;color:var(--text);border:1px solid #393c45;border-radius:13px;padding:13px;font:16px/1.55 inherit;outline:none}textarea:focus{border-color:var(--accent)}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:#15171b;color:var(--text);border-radius:999px;padding:9px 12px;font-size:13px}.chip.active{background:var(--accent);border-color:var(--accent);color:var(--accentText);font-weight:700}.btn{display:flex;justify-content:center;align-items:center;gap:8px;width:100%;border:0;border-radius:13px;padding:14px 15px;font-size:15px;font-weight:750;cursor:pointer;margin-top:10px}.primary{background:var(--accent);color:var(--accentText)}.secondary{background:#292c33;color:var(--text);border:1px solid #3a3d45}.smallbtn{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-size:12px}.steps{display:grid;gap:12px}.step{display:flex;gap:11px;align-items:flex-start;color:var(--muted);line-height:1.5;font-size:14px}.num{flex:0 0 25px;width:25px;height:25px;border-radius:8px;display:grid;place-items:center;background:#2b2e35;color:var(--accent);font-weight:800}.notice{font-size:12px;color:var(--muted);line-height:1.55;margin-top:13px}.output{white-space:pre-wrap;background:#111216;border:1px solid var(--line);padding:13px;border-radius:12px;line-height:1.55;overflow-wrap:anywhere}.quick{display:grid;grid-template-columns:1fr 1fr;gap:9px}.quick button{text-align:left;min-height:66px;background:#15171b;border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--text)}.quick strong{display:block;font-size:13px;margin-bottom:5px}.quick span{color:var(--muted);font-size:12px}@media(min-width:600px){main{padding-top:34px}.hero h2{font-size:36px}}
+</style>
+</head>
+<body>
+<main>
+  <header class="brand"><div class="logo">Aa</div><div><div class="eyebrow">CHINESE → NATURAL ENGLISH</div><h1>自然英文 · AI 改写助手</h1></div></header>
+  <section class="hero"><h2>把你想说的中文，<br>变成自然的英文。</h2><p>为日常聊天设计。保留你的意思，避免生硬直译，让表达更像朋友之间真实会说的话。</p></section>
+  <section class="card">
+    <div class="labelrow"><label for="source">输入中文</label><span class="hint" id="count">0 字</span></div>
+    <textarea id="source" placeholder="例如：今天有点累，改天再一起出去玩吧。"></textarea>
+    <div class="labelrow" style="margin-top:17px"><span>英文语气</span><span class="hint">选择一种风格</span></div>
+    <div class="chips" id="tones">
+      <button class="chip active" data-tone="casual">自然聊天</button><button class="chip" data-tone="friendly">友好热情</button><button class="chip" data-tone="funny">轻松幽默</button><button class="chip" data-tone="polite">礼貌得体</button><button class="chip" data-tone="flirty">微妙暧昧</button>
+    </div>
+    <button class="btn primary" id="make">生成 AI 润色指令 ↗</button>
+    <p class="notice">免费模式：本工具不调用付费 API，也不会把文字自动上传。它会生成一条可复制的指令，你把它发给 ChatGPT，就能获得 AI 润色结果。</p>
+  </section>
+  <section class="card" id="resultCard" hidden>
+    <div class="labelrow"><span>已准备好你的指令</span><button class="smallbtn" id="copyPrompt">复制指令</button></div>
+    <div class="output" id="promptOut"></div>
+    <button class="btn primary" id="openChatGPT">打开 ChatGPT ↗</button>
+    <p class="notice">打开后，将指令粘贴到 ChatGPT 对话框发送。返回结果后，长按英文即可复制到任何聊天 App。</p>
+  </section>
+  <section class="card">
+    <div class="labelrow"><span>常用聊天表达</span><span class="hint">离线可用</span></div>
+    <div class="quick">
+      <button data-phrase="我刚看到你的消息。"><strong>刚看到消息</strong><span>自然、不生硬</span></button>
+      <button data-phrase="没事，不用担心。"><strong>没关系</strong><span>安慰对方</span></button>
+      <button data-phrase="听起来不错！"><strong>听起来不错</strong><span>表达赞同</span></button>
+      <button data-phrase="你最近怎么样？"><strong>最近怎么样</strong><span>开启聊天</span></button>
+      <button data-phrase="我今天有点忙，晚点回复你。"><strong>晚点回复</strong><span>友好说明</span></button>
+      <button data-phrase="有机会我们一起去吧。"><strong>下次一起去</strong><span>轻松邀约</span></button>
+    </div>
+    <p class="notice">点选短句会填入上方输入框，再生成对应的 AI 润色指令。</p>
+  </section>
+  <section class="card">
+    <div class="labelrow"><span>免费使用流程</span></div>
+    <div class="steps">
+      <div class="step"><span class="num">1</span><span>在这里输入中文并选择语气，点击「生成 AI 润色指令」。</span></div>
+      <div class="step"><span class="num">2</span><span>复制指令并打开 ChatGPT，粘贴发送，得到自然英文。</span></div>
+      <div class="step"><span class="num">3</span><span>复制英文，粘贴到微信、TikTok、Instagram 等 App。</span></div>
+    </div>
+    <p class="notice">目前这是可运行的网页原型，不是系统级 iOS 键盘。要成为真正可在其他 App 内直接调用的键盘，需要使用 Apple 的键盘扩展开发流程并编译签名；通常需要 Mac 上的 Xcode。</p>
+  </section>
+  <footer class="notice" style="text-align:center">Natural English · Prototype 0.1 · 你的文字仅在本页面本地处理</footer>
+</main>
+<script>
+const source=document.getElementById('source'),count=document.getElementById('count');
+let tone='casual';
+const toneText={casual:'natural, casual everyday English, like a native speaker texting a friend',friendly:'warm, friendly, and upbeat English',funny:'light, playful, slightly humorous English without forcing jokes',polite:'polite, considerate, natural English',flirty:'subtly flirty and charming English, without sounding cheesy'};
+source.addEventListener('input',()=>count.textContent=source.value.length+' 字');
+document.querySelectorAll('#tones .chip').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#tones .chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');tone=b.dataset.tone;}));
+document.querySelectorAll('[data-phrase]').forEach(b=>b.addEventListener('click',()=>{source.value=b.dataset.phrase;source.dispatchEvent(new Event('input'));source.focus();window.scrollTo({top:0,behavior:'smooth'});}));
+function makePrompt(){const text=source.value.trim();if(!text){source.focus();alert('请先输入你想表达的中文。');return '';}return `Translate and rewrite the following Chinese into ${toneText[tone]}. Preserve the exact meaning and emotional nuance. Do not translate word-for-word. Keep it concise and suitable for a real chat message. Output only the best English version, with no explanation or quotation marks.\n\nChinese: ${text}`;}
+document.getElementById('make').addEventListener('click',()=>{const p=makePrompt();if(!p)return;document.getElementById('promptOut').textContent=p;document.getElementById('resultCard').hidden=false;document.getElementById('resultCard').scrollIntoView({behavior:'smooth',block:'start'});});
+async function copyText(t){try{await navigator.clipboard.writeText(t);alert('已复制。');}catch(e){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();alert('已尝试复制；如果没有成功，请长按文字手动复制。');}}
+document.getElementById('copyPrompt').addEventListener('click',()=>copyText(document.getElementById('promptOut').textContent));
+document.getElementById('openChatGPT').addEventListener('click',()=>window.open('https://chatgpt.com/','_blank','noopener'));
+</script>
+</body>
+</html>
